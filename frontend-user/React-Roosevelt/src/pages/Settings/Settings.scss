@@ -1,0 +1,78 @@
+.foto-container {
+  border-radius: 50%;
+  .foto {
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 120px;
+    max-height: 120px;
+    transition: all 0.8s ease;
+    border: 1px solid rgb(255, 255, 255);
+  }
+  .foto:hover{
+    transform: scale(1.2);
+    border-radius: 100px;
+    border: 1px solid gray;
+  }
+}
+
+.config-data-user {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  background-color: rgb(102, 102, 102);
+  position: absolute;
+  visibility: hidden;
+}
+
+.config-data-user.show {
+  position: absolute;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.user-goals {
+  color: white;
+
+  .status-title {
+    color: rgb(255, 255, 255);
+  }
+
+  table {
+    border-collapse: separate;
+
+    tr {
+      background: #494949;
+      transition: all 160ms ease;
+    }
+
+    .goal {
+      padding: 12px 16px;
+    }
+    .goal:hover svg {
+      animation: movement 1s infinite ease-in-out;
+    }
+    @keyframes movement {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Borde redondeado izquierda */
+    tr td:first-child {
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+    }
+    /* Borde redondeado derecha */
+    tr td:last-child {
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+  }
+}

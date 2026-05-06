@@ -1,0 +1,51 @@
+@import "../../variables.scss";
+.title-login {
+    
+        font-family: $font-family-sans-serif;
+    
+}
+.bg-form {
+  // Contenedor de los botones para darles espacio
+  .row.g-2.mb-4 {
+    margin-top: 20px;
+  }
+
+  .navigacion-btn {
+    padding: 18px 30px; 
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // btn no active
+    &.btn-outline-secondary {
+      background-color: transparent;
+      border-color: $secondary;
+      color: $secondary;
+
+      &:hover {
+        // Al pasar el mouse, el fondo se vuelve amarillo y el texto blanco
+        background-color: $secondary;
+        color: white;
+        border-color: $secondary;
+        transform: translateY(-2px);
+      }
+    }
+
+    // btn act
+    &.btn-primary {
+      background-color: $primary;
+      border-color: $primary;
+      color: $navigacion-btn-text;
+
+      &:hover {
+        // Evitamos que se ponga negro. Se aclara un poco el morado.
+        background-color: lighten($primary, 10%);
+        border-color: $secondary; 
+
+        color: $navigacion-btn-text;
+      }
+    }
+  }
+}

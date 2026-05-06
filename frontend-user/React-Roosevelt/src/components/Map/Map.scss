@@ -1,0 +1,92 @@
+#root {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#map-container {
+  display: flex;
+  flex-direction: column;  
+  height: 85vh;
+  width: 100%;
+  /* temporarily set the background color so we can tell where the map container is positioned */
+  background-color: lightgrey;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.container-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+@media (min-width: 600px) {
+  #map-container {
+    width: 50%;
+  }
+  .container-map {
+    flex-direction: row;
+  }
+}
+
+.sidebar {
+  background-color: rgb(35 55 75 / 90%);
+  color: #fff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+}
+
+.reset-button {
+  position: absolute;
+  top: 50px;
+  z-index: 1;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.location-button {
+  position: absolute;
+  bottom: 40px;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  left: 12px;
+  padding: 4px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.icono {
+  font-size: 30px;
+  color: red;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.infoSide{
+  background-color: rgba(184, 183, 183, 0.516);
+  color: black;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1009;
+  position: absolute;
+  min-height: 460px;
+  top: 0;
+  right:0 ;
+  margin-top: 5px;
+  border-radius: 4px;
+  transform: translateX(380px);
+  transition: all 1s ease;
+}
+.infoSide:hover{
+  transform: translateX(-5px)
+}

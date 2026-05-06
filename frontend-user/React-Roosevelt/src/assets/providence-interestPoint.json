@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": 0,
+      "type": "Feature",
+      "properties": {
+        "name": "Elevador del castillo",
+        "cuisine": "elevator"
+      },
+      "geometry": {
+        "coordinates": [-0.4773503018700467, 38.34712845540338],
+        "type": "Point"
+      }
+    },
+    {
+      "id": 1,
+      "type": "Feature",
+      "properties": {
+        "name": "Escaleras al castillo",
+        "cuisine": "stairs"
+      },
+      "geometry": {
+        "coordinates": [-0.4817039085840804,38.34819269436531],
+        "type": "Point"
+      }
+    },
+    {
+      "id": 2,
+      "type": "Feature",
+      "properties": {
+        "name": "Obras por recontruccion",
+        "cuisine": "rebuild"
+      },
+      "geometry": {
+        "coordinates": [-0.4799843364780543, 38.346700693816615],
+        "type": "Point"
+      }
+    },
+    {
+      "id": 3,
+      "type": "Feature",
+      "properties": {
+        "name": "Rampa para sillas de ruedas",
+        "cuisine": "ramp"
+      },
+      "geometry": {
+        "coordinates": [-71.40445548685469, 41.82144758156548],
+        "type": "Point"
+      }
+    },
+    {
+      "id": 4,
+      "type": "Feature",
+      "properties": {
+        "name": "parking elevador",
+        "cuisine": "elevator"
+      },
+      "geometry": {
+        "coordinates": [-0.49059470172582564, 38.3462112075826],
+        "type": "Point"
+      }
+    }
+  ]
+}

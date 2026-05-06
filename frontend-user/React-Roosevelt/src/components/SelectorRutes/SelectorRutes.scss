@@ -1,0 +1,82 @@
+@import "../../variables.scss";
+
+.container-selector {
+    width: 50%;
+    max-height: 80vh;
+
+    .container-rute {
+        width: 95%;
+        height: 90%;
+        border-radius: 10px;
+        transition: transform 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+            box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.463);
+        }
+
+        .btn-guardar-favorito {
+            background-color: $secondary;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                box-shadow 0.3s ease;
+
+            &:hover {
+                transform: scale(1.1) translateY(-2px);
+                background-color: darken($secondary, 10%);
+            }
+        }
+
+        .btn-like {
+            background-color: rgba(255, 255, 255, 0.9); // Fondo semi-transparente pro
+            border: none; // Menos bordes, más limpieza
+            padding: 8px 14px;
+            border-radius: 8px; // Bordes un poco más redondeados
+            cursor: pointer;
+            font-weight: 600;
+            color: #333; // Un gris muy oscuro es más elegante que el negro puro
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            // Suavizamos la transición
+            transition:
+                transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                color 0.3s ease;
+
+            // Una sombra suave inicial para dar profundidad
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+            &:hover {
+                transform: scale(1.1) translateY(-3px);
+
+                // En lugar de gris plano, usemos un color con más personalidad (como un azul Maps o un rojo "Like")
+                background-color: #ff4757; // Un rojo coral vibrante
+                color: white;
+
+                // Sombra más difuminada y con un toque de color
+                box-shadow: 0 8px 20px rgba(255, 71, 87, 0.4);
+            }
+
+            &:active {
+                transform: scale(0.95); // Efecto de "clic" real
+            }
+        }
+
+        .div_buttons {
+            padding: 3px;
+            background-image: url("../../assets/minMap_fondo.jpeg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    }
+}

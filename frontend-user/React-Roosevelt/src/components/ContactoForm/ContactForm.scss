@@ -1,0 +1,61 @@
+@import "../../variables.scss";
+
+/*  CONTACT SECTION */
+.contact-section {
+  background-color: $color_form_bg;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+
+  h2 {
+    letter-spacing: 2px;
+    font-family: $font-family-sans-serif;
+  }
+  p {
+    letter-spacing: 2px;
+  }
+}
+
+/*  FORM */
+.contact-form {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+
+  .form-control {
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: $primary-light;
+      box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    }
+
+    &.is-invalid {
+      border-color: $danger;
+    }
+  }
+
+  .invalid-feedback {
+    color: $danger;
+    font-weight: 600;
+  }
+}
+
+/*  BUTTON*/
+.btn-primary {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    border-color: $secondary;
+    transform: scale(1.1); // Efecto de crecimiento
+    box-shadow: 0 10px 20px rgba($primary, 0.4);
+    background-color: $btn-hover-bg;
+  }
+}
+
+/*  LINKS */
+// a {
+//   color: $link-color;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }

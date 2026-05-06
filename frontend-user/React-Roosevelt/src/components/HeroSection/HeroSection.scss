@@ -1,0 +1,70 @@
+@import "../../variables.scss"; 
+
+.hero-section {
+  position: relative;
+  max-width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4; // Bajamos un poco la opacidad para que el texto resalte más
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.2); // oscurecimiento del fondo del texto
+  backdrop-filter: blur(4px); // Efecto cristal moderno
+}
+
+.hero-title {
+  font-family: $font-family-sans-serif;
+  //  línea debajo del título
+  &::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: $secondary;
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+}
+
+.hero-text {
+  line-height: 1.8;
+}
+
+ .btn-primary {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    border-color: $secondary;
+    transform: scale(1.1); // Efecto de crecimiento
+    box-shadow: 0 10px 20px rgba($primary, 0.4);
+  }
+}
+
+// Animación de entrada
+.animate-fade {
+  animation: fadeInUp 1.2s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

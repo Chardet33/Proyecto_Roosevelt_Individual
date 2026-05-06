@@ -1,0 +1,189 @@
+$primary: #3C1053;
+$secondary: #9d5baf;
+$warning: #b75e00;
+$color_texto_oscuro: black;
+$color_fondo: #f3f2f1;
+$color_form_background: #eff2f7;
+$link-color: #1d7bbf; //call to action
+
+$btn-form:#c216db;
+$btn-bg: $primary;
+$btn-hover-bg: darken($primary, 8%);
+
+$Color_F_Claro: #F3F2F1;
+$Color_Acc_ClaroINFORMATION: #84329B;
+$font-family-sans-serif: 'MyFont', Arial, sans-serif;
+$color_error: #D4351C;
+$color_texto: #FFFFFF;
+$color_txt_botones: rgb(60, 16, 83);
+$font-weight_enlace: bold;
+
+
+//example
+
+//@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
+
+
+
+/*form*/
+.contact-section {
+  background-color: $color_form_background !important;
+  h2 {
+    color: #7744d9;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+ 
+  p {
+    color: black;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+}
+
+
+.contact-form {
+  background-color: $color_form_background !important;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  
+  &:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+  }
+}
+
+.btn-custom {
+  background-color: $btn-bg;
+  color: #fff;
+  border-radius: 30px;
+  padding: 12px 40px;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $btn-hover-bg;
+    color: #fff;
+  }
+}
+
+
+
+
+
+
+
+$primary: #3C1053;
+$secondary: #9d5baf;
+$warning: #b75e00;
+$color_texto_oscuro: black;
+$color_fondo: #f3f2f1;
+$color_form_background: #eff2f1;
+$link-color: #1d7bbf; // call to action
+
+$btn-form: #c216db;
+$btn-bg: $primary;
+$btn-hover-bg: darken($primary, 8%);
+
+$Color_F_Claro: #F3F2F1;
+$Color_Acc_ClaroINFORMATION: #84329B;
+$font-family-sans-serif: 'MyFont', Arial, sans-serif;
+$color_error: #D4351C;
+$color_texto: #FFFFFF;
+$color_txt_botones: rgb(60, 16, 83);
+$font-weight_enlace: bold;
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+/* CONTACT SECTION ===== */
+.contact-section {
+  background-color: $color_form_background !important;
+
+  h2 {
+    color: $Color_Acc_ClaroINFORMATION;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  p {
+    color: $color_texto_oscuro;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+}
+
+/*  FORM  */
+.contact-form {
+  background-color: $color_form_background !important;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  .form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+
+    &:focus {
+      border-color: $secondary;
+      box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+    }
+
+    &.is-invalid {
+      border-color: $color_error;
+    }
+  }
+
+  .invalid-feedback {
+    color: $color_error;
+    font-weight: 600;
+  }
+}
+
+/*  BUTTON */
+.btn-custom {
+  background-color: $btn-bg;
+  color: $color_texto;
+  border-radius: 30px;
+  padding: 12px 40px;
+  border: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $btn-hover-bg;
+    color: $color_texto;
+  }
+}
+
+/*  LINKS */
+a {
+  color: $link-color;
+  font-weight: $font-weight_enlace;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

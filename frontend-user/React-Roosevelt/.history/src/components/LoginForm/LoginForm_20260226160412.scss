@@ -1,0 +1,58 @@
+@import "../../variables.scss";
+
+/* SECTION */
+
+.contact-section { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & h2 {
+    color:$color_title;
+  }
+
+  & .btn_link {
+    color:$color_title;
+  }
+}
+
+/* FORM CARD */
+.contact-form {
+  background-color: $color_form_background;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* INPUTS */
+.form-control {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+
+  &:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 0 0.2rem rgba($secondary, 0.25);
+  }
+}
+
+/* BUTTON */
+.btn-custom {
+  background-color: $btn-bg;
+  color: $color_texto;
+  border-radius: 30px;
+  padding: 12px 40px;
+  border: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $btn-hover-bg;
+    color: $color_texto;
+  }
+}
+
+/* ERROR */
+.text-danger {
+  color: $color_error !important;
+}

@@ -1,0 +1,34 @@
+//variables nuevas para bootstrap
+$primary: #5B2671;
+$primary-light: #9974AA;
+$secondary:#e6d15a;
+$secondary-dark:#ac9f30;
+$success:#527614;
+$danger: #af251b;
+$warning: #ffa023;
+$info: #a0C562;
+$color_primary-accento: #84329B;
+$light: white;
+// $dark:
+$text-nav: #736100;
+
+
+//Form - botones de form
+
+$color_form_bg: #f8f9fa;
+$border-form: $primary-light;
+$navigacion-btn-text:$light;
+//$btn-form: #c216db;
+
+$btn-hover-bg: darken($primary, 10%);
+//Typografia
+@font-face {
+    font-family: 'RobotoSerif';
+    src: url('./../public/assets/fonts/static/RobotoSerif-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+//font
+$font-sans-serif: 'RobotoSerif';
+$font-family-sans-serif: 'RobotoSerif';
+$font-family-base: $font-family-sans-serif;

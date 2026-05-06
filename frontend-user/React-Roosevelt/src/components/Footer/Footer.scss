@@ -1,0 +1,60 @@
+@import "../../variables.scss"; 
+
+.footer-section {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)), url('../../../public/assets/mapa.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.footer-logo {
+  width: 40px;
+  object-fit: contain; 
+}
+.footer-section {
+
+  h3, h5 {
+    color: $primary !important;
+    font-weight: 700; 
+  }
+
+  p {
+    color: $primary; 
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: $primary;
+    font-weight: 500; 
+    text-decoration: none !important; 
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color_primary-accento;
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 1.2rem;
+
+    li {
+      margin-bottom: 0.6rem; 
+
+      &::marker {
+        color: $primary; 
+        font-size: 1.2rem; 
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-color: rgba($primary, 0.2) !important; 
+    
+    p, a {
+      color: $primary !important;
+    }
+
+    a:hover {
+      color: $color_primary-accento !important;
+    }
+  }
+}
