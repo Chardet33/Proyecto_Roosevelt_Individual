@@ -1,0 +1,13 @@
+<main class="main-container">
+  <section class="login-card">
+    <h1>Roosevelt Admin</h1>
+    <p>Inicia sesión para continuar</p>
+    
+    <div class="form-group">
+      <input type="text" [(ngModel)]="username" placeholder="Usuario" class="custom-input">
+      <input type="password" [(ngModel)]="password" placeholder="Contraseña" class="custom-input">
+    </div>
+
+    <button (click)="onLogin()" class="btn-primary">Ingresar</button>
+  </section>
+</main>

@@ -1,0 +1,69 @@
+@use '../../../variables' as global;
+// Contenedor principal para centrar todo
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; // Esto hace que ocupe todo el alto de la pantalla
+    padding: 20px;
+}
+
+// La tarjeta morada
+.login-card {
+    background-color: global.$color-secondary;
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    border: 1px solid global.$color-secundary-dark;
+
+    h1 {
+        color: global.$color-focus;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: global.$color-texto-light;
+        margin-bottom: 30px;
+    }
+}
+
+// Los inputs
+.custom-input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid global.$color-secundary-light;
+    background-color: global.$color-secundary-dark;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box; // Importante para que no se salgan del borde
+
+    &:focus {
+        border-color: global.$color-focus;
+        box-shadow: 0 0 8px global.$color-focus;
+    }
+}
+
+// El botón brillante
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background-color: global.$color-focus;
+    color: global.$color-secondary;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        filter: brightness(1.2);
+        transform: translateY(-2px);
+    }
+}
