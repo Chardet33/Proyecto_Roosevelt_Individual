@@ -1,0 +1,20 @@
+@use '../../../variables' as global;
+header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+
+        p {
+            color: global.$color-texto-dim;
+        }
+    }
+
+    .user-pill {
+        background: global.$color-card;
+        padding: 8px 15px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }

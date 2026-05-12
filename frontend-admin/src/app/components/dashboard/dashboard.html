@@ -1,26 +1,38 @@
-<div class="admin-layout">
-  <!-- BARRA LATERAL -->
-  <aside class="sidebar">
-    <div class="logo">Roosevelt</div>
-    <nav>
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Usuarios</a></li>
-        <li><a href="#">Reportes</a></li>
-        <li><a href="#">Configuración</a></li>
-      </ul>
-    </nav>
-  </aside>
+<div class="dashboard-wrapper">
+    <div class="container">
+        <aside>
+            <div class="logo">
+                <span class="material-symbols-outlined accent">explore</span>
+                <h2>Geo<span class="accent">Admin</span></h2>
+            </div>
+            <nav class="sidebar">
+                <a routerLink="/dashboard/rutas" routerLinkActive="active" class="nav-link">
+                    <span class="material-symbols-outlined">route</span> Rutas
+                </a>
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="content">
-    <header class="top-bar">
-      <h2>Panel de Control</h2>
-      <button (click)="logout()" class="btn-logout">Cerrar sesión</button>
-    </header>
-    
-    <div class="container-fluid">
-      <p>¡Bienvenido al panel principal de Roosevelt Admin!</p>
+                <a routerLink="/dashboard/zonas" routerLinkActive="active" class="nav-link">
+                    <span class="material-symbols-outlined">map</span> Zonas
+                </a>
+                <a routerLink="/dashboard/objetos" routerLinkActive="active" class="nav-link">
+                    <span class="material-symbols-outlined">location_on</span> Objetos
+                </a>
+
+                <a routerLink="/dashboard/usuarios" routerLinkActive="active" class="nav-link">
+                    <span class="material-symbols-outlined">group</span> Usuarios
+                </a>
+
+                <div class="sidebar-divider"></div>
+
+                <a (click)="logout()" class="nav-link logout" style="cursor: pointer;">
+                    <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+                </a>
+            </nav>
+        </aside>
+
+        <main> 
+            <div class="dynamic-container">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
     </div>
-  </main>
 </div>

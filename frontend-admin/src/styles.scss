@@ -1,11 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
 
-@use 'variables' as *;
+@use './variables' as *;
 
-body{
+body {
     background-color: $color-fondo;
     color: $color-texto;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif; // Aprovechamos de poner la del Dashboard
     margin: 0;
     padding: 0;
 }

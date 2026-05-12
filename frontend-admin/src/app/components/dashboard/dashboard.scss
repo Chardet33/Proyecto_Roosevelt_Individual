@@ -1,58 +1,241 @@
 @use '../../../variables' as global;
 
-.admin-layout {
-  display: flex;
-  height: 100vh;
-}
 
-.sidebar {
-  width: 250px;
-  background-color: global.$color-secondary;
-  border-right: 1px solid global.$color-secundary-dark;
-  padding: 20px;
+.dashboard-wrapper {
+    width: 100vw;
+    min-height: 100vh;
 
-  .logo {
-    color: global.$color-focus;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-align: center;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    li {
-      margin-bottom: 15px;
-      a {
-        color: global.$color-texto-light;
-        text-decoration: none;
-        &:hover { color: global.$color-focus; }
-      }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
     }
-  }
-}
 
-.content {
-  flex: 1;
-  background-color: global.$color-fondo;
-  color: white;
+    .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined' !important;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 24px;
+        /* Ajusta el tamaño aquí */
+        display: inline-block;
+        line-height: 1;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+    }
 
-  .top-bar {
-    padding: 15px 30px;
-    background-color: global.$color-secundary-dark;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-}
 
-.btn-logout {
-    background: transparent;
-    border: 1px solid global.$color-focus;
-    color: global.$color-focus;
-    padding: 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+    .container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 250px minmax(0, 1fr);
+        min-height: 100vh;
+        background: global.$color-fondo;
+        color: global.$color-texto;
+    }
+
+    aside {
+        background: global.$color-side;
+        padding: 20px;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 40px;
+
+        .accent {
+            color: global.$color-accent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: global.$color-texto-dim;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 5px;
+        transition: 0.3s;
+        border-left: 4px solid transparent; // Borde invisible por defecto
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: global.$color-texto;
+        }
+
+        // Esta es la clase que añade Angular automáticamente
+        &.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: global.$color-texto;
+            border-left: 4px solid global.$color-accent; // El brillo Cyan
+            font-weight: 600;
+        }
+    }
+
+    .sidebar-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 20px 0;
+    }
+
+    .logout {
+        color: global.$color-danger !important;
+    }
+
+    main {
+        width: 100%;
+        min-width: 0;
+        padding: 40px;
+        overflow-y: auto;
+        background: global.$color-fondo;
+    }
+
+    .table-section {
+        width: 100%;
+    }
+
+    .card-table {
+        width: 100%;
+        background: global.$color-card;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    }
+
+    
+    .table-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .btn-create {
+            background: global.$color-create;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    }
+
+    .search-bar {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 8px 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        input {
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+        }
+    }
+
+    .card-table {
+        background: global.$color-card;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+            text-align: left;
+            padding: 15px;
+            color: global.$color-texto-dim;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    }
+
+    .id-cell {
+        color: global.$color-accent;
+        font-family: monospace;
+        font-weight: bold;
+    }
+
+    .bold {
+        font-weight: 600;
+    }
+
+    .badge {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+    }
+
+    .author {
+        color: #e0aaff;
+    }
+
+    .actions-cell {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .btn-edit,
+        .btn-delete {
+            border: none;
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .btn-edit {
+            background: rgba(255, 165, 2, 0.15);
+            color: global.$color-edit;
+
+            &:hover {
+                background: global.$color-edit;
+                color: black;
+            }
+        }
+
+        .btn-delete {
+            background: rgba(255, 71, 87, 0.15);
+            color: global.$color-danger;
+
+            &:hover {
+                background: global.$color-danger;
+                color: white;
+            }
+        }
+    }
 }

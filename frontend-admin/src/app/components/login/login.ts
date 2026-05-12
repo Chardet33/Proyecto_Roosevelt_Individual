@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // 1. Importar el Router
+import { Router } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,11 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login {
+export class LoginComponent {
   username:string = '';
   password:string = '';
 
-  constructor(private router: Router) {} // 2. Inyectar el Router
+  constructor(private router: Router) {}
 
   onLogin() {
     if (this.username === 'admin' && this.password === '1234') {

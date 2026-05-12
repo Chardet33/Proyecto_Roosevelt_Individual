@@ -1,8 +1,21 @@
-$color-primary: #450b6e;
-$color-secondary: #350359;
-$color-secundary-light: #b598cc;
-$color-fondo: #450b6e;
+// Variables SCSS para el proyecto
+// Colores Generales
+$color-fondo: #350359;
+$color-side: #25023f;
+$color-card: #450b6e;
+// Colores de accion
+$color-focus: #00f2ff;
+$color-accent: #00f2ff;
+$color-danger: #ff4757;
+$color-edit: #ffa502;
+$color-create: #2ed573;
+// Colores de texto
 $color-texto: #ffffff;
-$color-texto-light: #b598cc;
-$color-secundary-dark: #3B1C53;
-$color-focus:#00F2FF;
+$color-texto-dim: #bba0d6;
+$color-texto-light: #bba0d6;
+// Colores secundarios
+$color-secondary: #450b6e;
+$color-secondary-dark: #25023f;
+$color-secondary-light: rgba(255, 255, 255, 0.1);
+// Fuentes
+$font-main: 'Inter', sans-serif;
