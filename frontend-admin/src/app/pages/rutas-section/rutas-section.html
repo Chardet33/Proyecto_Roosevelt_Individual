@@ -1,14 +1,47 @@
 <div class="rutas-section">
     <header>
-                <div class="header-content">
-                    <h1>Gestión de Rutas</h1>
-                    <p>Panel administrativo para el control de trayectorias</p>
-                </div>
-                <div class="user-pill">
-                    <span class="material-symbols-outlined">account_circle</span>
-                    <b>Admin</b>
-                </div>
+        <div class="header-content">
+            <h1>Gestión de Rutas</h1>
+            <p>Panel administrativo para el control de trayectorias</p>
+        </div>
+        <div class="user-pill">
+            <span class="material-symbols-outlined">account_circle</span>
+            <b>Admin</b>
+        </div>
     </header>
 </div>
 
-<p>rutas-section works!</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Ruta</th>
+            <th>Fecha Publicación</th>
+            <th>Descripción</th>
+            <th>Zona</th>
+            <th>Autor</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @for (ruta of rutas(); track ruta.id) {
+        <tr>
+            <td class="id-cell">#RT-{{ruta.id}}</td>
+            <td class="bold">{{ruta.nombreRuta}}</td>
+            <td>{{ruta.fecha_pub}}</td>
+            <td class="desc-cell">{{ruta.descripcion}}</td>
+            <td><span class="badge">{{ruta.zona}}</span></td>
+            <td class="author">@{{ruta.usuario_autor.nombreUsuario}}</td>
+            <td class="actions-cell">
+                <button class="btn-edit"><span class="material-symbols-outlined">edit</span></button>
+                <button class="btn-delete"><span class="material-symbols-outlined">delete</span></button>
+            </td>
+        </tr>  
+        } @empty {
+                <p>No se encontraron rutas o el servidor está apagado.</p>
+            }
+        
+        
+    </tbody>
+</table>

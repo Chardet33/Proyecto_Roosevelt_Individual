@@ -10,7 +10,15 @@ import { UsuariosSection } from './pages/usuarios-section/usuarios-section';
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: Dashboard },
+    { path: 'dashboard', component: Dashboard,
+        children: [
+            {path: 'rutas', component: RutasSection},
+            {path: 'zonas', component: ZonasSection},
+            {path: 'objetos', component: ObjetosSection},
+            {path: 'usuarios', component: UsuariosSection},
+            {path: '', redirectTo: 'rutas', pathMatch: 'full' }
+        ]
+    },
     { path: 'rutas', component: RutasSection },
     { path: 'zonas', component: ZonasSection },
     { path: 'objetos', component: ObjetosSection },
