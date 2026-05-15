@@ -6,42 +6,65 @@
         </div>
         <div class="user-pill">
             <span class="material-symbols-outlined">account_circle</span>
-            <b>Admin</b>
+            <b>{{ currentUsername() || 'Usuario' }}</b>
         </div>
     </header>
-</div>
+    <section class="content-area">
+        <div class="header">
+            <div class="table-actions">
+                <button class="btn-create" (click)="crearRuta()">
+                    <span class="material-symbols-outlined">add</span> Nueva Ruta
+                </button>
+                <div class="search-bar">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Buscar ruta...">
+                </div>
+                
+            </div>
+        </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre Ruta</th>
-            <th>Fecha Publicación</th>
-            <th>Descripción</th>
-            <th>Zona</th>
-            <th>Autor</th>
-            <th class="text-center">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-            @for (ruta of rutas(); track ruta.id) {
-        <tr>
-            <td class="id-cell">#RT-{{ruta.id}}</td>
-            <td class="bold">{{ruta.nombreRuta}}</td>
-            <td>{{ruta.fecha_pub}}</td>
-            <td class="desc-cell">{{ruta.descripcion}}</td>
-            <td><span class="badge">{{ruta.zona}}</span></td>
-            <td class="author">@{{ruta.usuario_autor.nombreUsuario}}</td>
-            <td class="actions-cell">
-                <button class="btn-edit"><span class="material-symbols-outlined">edit</span></button>
-                <button class="btn-delete"><span class="material-symbols-outlined">delete</span></button>
-            </td>
-        </tr>  
-        } @empty {
-                <p>No se encontraron rutas o el servidor está apagado.</p>
-            }
-        
-        
-    </tbody>
-</table>
+        <div class="card-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de Ruta</th>
+                        <th>Fecha Pub.</th>
+                        <th>Descripción</th>
+                        <th>Zona</th>
+                        <th>Autor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of rutas(); track item.id) {
+                    <tr>
+                        <td class="id-cell">#RT-{{ item.id }}</td>
+                        <td class="bold">{{ item.nombreRuta }}</td>
+                        <td>{{ item.fecha_pub }}</td>
+                        <td class="desc-cell">{{ item.descripcion }}</td>
+                        <td>
+                            <span class="badge">{{ item.zona.nombre_zona }}</span>
+                        </td>
+                        <td class="author">{{ item.usuario_autor.username }}</td>
+                        <td class="actions-cell">
+                            <button class="btn-edit">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-delete">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px;">
+                            No hay rutas disponibles o conectando con la API...
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

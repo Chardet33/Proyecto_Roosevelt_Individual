@@ -8,5 +8,9 @@
     </div>
 
     <button (click)="onLogin()" class="btn-primary">Ingresar</button>
+
+    <p class="error-message {{ errorMessage() ? 'show' : 'hide' }}">{{ errorMessage() }}</p>
+
+    
   </section>
 </main>

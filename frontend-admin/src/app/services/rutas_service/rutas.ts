@@ -11,4 +11,8 @@ export class RutasService {
   getRutas(): Observable<Ruta[]> {
     return this.http.get<Ruta[]>(this.apiUrl);
   }
+
+  crearRuta(nuevaRuta: Partial<Ruta>){
+    return this.http.post<Ruta>(this.apiUrl, nuevaRuta);
+  }
 }

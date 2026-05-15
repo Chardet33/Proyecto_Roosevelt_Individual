@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class Usuarios {
+export class UsuariosService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/roosevelt/api/usuarios'; // Ajusta a tu endpoint real
 

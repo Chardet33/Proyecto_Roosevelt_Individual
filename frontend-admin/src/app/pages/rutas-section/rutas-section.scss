@@ -1,20 +1,153 @@
 @use '../../../variables' as global;
+
 header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 
-        p {
-            color: global.$color-texto-dim;
-        }
+    p {
+        color: global.$color-texto-dim;
     }
+}
 
-    .user-pill {
-        background: global.$color-card;
-        padding: 8px 15px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+.user-pill {
+    background: global.$color-card;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* Acciones */
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-create {
+    background: global.$color-create;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-bar {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+}
+
+/* Tabla */
+.card-table {
+    background: global.$color-card;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: rgba(0, 0, 0, 0.2);
+    text-align: left;
+    padding: 15px;
+    color: global.$color-texto-dim;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Datos de ejemplo */
+.id-cell {
+    color: global.$color-focus;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.desc-cell {
+    color: global.$color-texto-dim;
+    font-size: 0.9rem;
+    max-width: 250px;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.author {
+    color: global.$color-texto-dim;
+}
+
+/* Botones de acción corregidos */
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: white;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: rgba(255, 165, 2, 0.15);
+    color: global.$color-edit;
+}
+
+.btn-edit:hover {
+    background: global.$color-edit;
+    color: black;
+}
+
+.btn-delete {
+    background: rgba(255, 71, 87, 0.15);
+    color: global.$color-danger;
+}
+
+.btn-delete:hover {
+    background: global.$color-danger;
+    color: white;
+}

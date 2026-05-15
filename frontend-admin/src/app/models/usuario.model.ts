@@ -1,14 +1,13 @@
-import { Ruta } from './ruta.model';
-
+import { Ruta } from "./ruta.model";
 export interface Usuario {
   id: number;
-  nombreUsuario: string;   
+  username: string;        // Cambiado de nombreUsuario a username
   email: string;
   password: string;
-  email_secundario: string;    
+  email_sec: string;       // En Java pusiste email_sec
   administrador: boolean;
-  telefono: string; 
-  fecha_nacimiento: string;
-  foto:string;
-  rutasPublicadas: Ruta[]; // Usando la interface Ruta
+  tel: string;             // En Java pusiste tel
+  fechaNac: string;        // En Java pusiste fechaNac
+  foto: string;
+  misRutas: Ruta[];        // En Java pusiste misRutas
 }
