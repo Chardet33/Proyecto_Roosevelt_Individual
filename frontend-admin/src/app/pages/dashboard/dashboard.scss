@@ -1,9 +1,10 @@
 @use '../../../variables' as global;
 
-
 .dashboard-wrapper {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 
     * {
         margin: 0;
@@ -17,7 +18,6 @@
         font-weight: normal;
         font-style: normal;
         font-size: 24px;
-        /* Ajusta el tamaño aquí */
         display: inline-block;
         line-height: 1;
         text-transform: none;
@@ -27,11 +27,11 @@
         direction: ltr;
     }
 
-
-    .container {
+    // --- DISEÑO PARA ESCRITORIO (PC) ---
+    .dashboard-container {
         display: grid;
         width: 100%;
-        grid-template-columns: 250px minmax(0, 1fr);
+        grid-template-columns: 250px minmax(0, 1fr); // Menú fijo a la izquierda y contenido al lado
         min-height: 100vh;
         background: global.$color-fondo;
         color: global.$color-texto;
@@ -41,6 +41,8 @@
         background: global.$color-side;
         padding: 20px;
         border-right: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
     }
 
     .logo {
@@ -58,6 +60,11 @@
         }
     }
 
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+
     .nav-link {
         display: flex;
         align-items: center;
@@ -68,18 +75,17 @@
         border-radius: 8px;
         margin-bottom: 5px;
         transition: 0.3s;
-        border-left: 4px solid transparent; // Borde invisible por defecto
+        border-left: 4px solid transparent;
 
         &:hover {
             background: rgba(255, 255, 255, 0.1);
             color: global.$color-texto;
         }
 
-        // Esta es la clase que añade Angular automáticamente
         &.active {
             background: rgba(255, 255, 255, 0.1);
             color: global.$color-texto;
-            border-left: 4px solid global.$color-accent; // El brillo Cyan
+            border-left: 4px solid global.$color-accent;
             font-weight: 600;
         }
     }
@@ -99,77 +105,19 @@
         min-width: 0;
         padding: 40px;
         overflow-y: auto;
+        overflow-x: auto; // Genera el scroll horizontal interno de la tabla si no cabe en PC
         background: global.$color-fondo;
-    }
-
-    .table-section {
-        width: 100%;
-    }
-
-    .card-table {
-        width: 100%;
-        background: global.$color-card;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-    }
-
+    }   
     
-    .table-actions {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-
-        .btn-create {
-            background: global.$color-create;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-    }
-
-    .search-bar {
-        background: rgba(0, 0, 0, 0.2);
-        padding: 8px 15px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        input {
-            background: transparent;
-            border: none;
-            color: white;
-            outline: none;
-        }
-    }
-
-    .card-table {
-        background: global.$color-card;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    // --- ESTILOS DE TABLAS GENERALES ---
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
 
         th {
-            background: rgba(0, 0, 0, 0.2);
-            text-align: left;
             padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
             color: global.$color-texto-dim;
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -219,23 +167,54 @@
         }
 
         .btn-edit {
-            background: rgba(255, 165, 2, 0.15);
-            color: global.$color-edit;
-
-            &:hover {
-                background: global.$color-edit;
-                color: black;
-            }
+            background: rgba(255, 183, 3, 0.2);
+            color: #ffb703;
+            &:hover { background: rgba(255, 183, 3, 0.4); }
         }
 
         .btn-delete {
-            background: rgba(255, 71, 87, 0.15);
+            background: rgba(global.$color-danger, 0.2);
             color: global.$color-danger;
+            &:hover { background: rgba(global.$color-danger, 0.4); }
+        }
+    }
 
-            &:hover {
-                background: global.$color-danger;
-                color: white;
-            }
+    // --- 📱 RESPONSIVE: COMPORTAMIENTO PARA MÓVILES (Menos de 768px) ---
+    @media (max-width: 768px) {
+        .dashboard-container {
+            grid-template-columns: 1fr; // Se colapsa a una única columna vertical
+            min-height: auto;
+        }
+
+        aside {
+            width: 100%;
+            height: auto;
+            border-right: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+            justify-content: center; // Centra el logo en móviles
+        }
+
+        .sidebar {
+            flex-direction: column; // Los enlaces se apilan perfectamente uno debajo del otro
+            width: 100%;
+        }
+
+        .nav-link {
+            margin-bottom: 8px;
+            padding: 10px;
+        }
+
+        .sidebar-divider {
+            margin: 10px 0;
+        }
+
+        main {
+            padding: 20px; // Reducimos espacio en pantallas compactas para dar más aire
         }
     }
 }

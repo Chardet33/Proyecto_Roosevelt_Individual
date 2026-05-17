@@ -12,14 +12,14 @@
     <section class="content-area">
         <div class="header">
             <div class="table-actions">
-                <button class="btn-create" (click)="crearRuta()">
+                <button class="btn-create" (click)="openModalCreation()">
                     <span class="material-symbols-outlined">add</span> Nueva Ruta
                 </button>
                 <div class="search-bar">
                     <span class="material-symbols-outlined">search</span>
                     <input type="text" placeholder="Buscar ruta...">
                 </div>
-                
+
             </div>
         </div>
 
@@ -48,10 +48,10 @@
                         </td>
                         <td class="author">{{ item.usuario_autor.username }}</td>
                         <td class="actions-cell">
-                            <button class="btn-edit">
+                            <button class="btn-edit" (click)="openModalEdit(item)">
                                 <span class="material-symbols-outlined">edit</span>
                             </button>
-                            <button class="btn-delete">
+                            <button class="btn-delete" (click)="openModalDelete(item.id)">
                                 <span class="material-symbols-outlined">delete</span>
                             </button>
                         </td>
@@ -68,3 +68,134 @@
         </div>
     </section>
 </div>
+
+<!-- Modal de Creación -->
+@if (isModalCreationOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Registrar Nueva Ruta</h2>
+            <button class="btn-close" (click)="closeModalCreation()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre de la Ruta</label>
+                <input type="text" [(ngModel)]="nuevaRuta().nombreRuta" placeholder="Ej: Sendero del Castillo">
+            </div>
+            <div class="form-group">
+                <label>Autor</label>
+                <input class=" opacity-75" type="text" value="{{currentUsername()}}"
+                    placeholder="Ej: Sendero del Castillo" disabled>
+            </div>
+
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea [(ngModel)]="nuevaRuta().descripcion"
+                    placeholder="Breve descripción de la trayectoria..."></textarea>
+            </div>
+            <div class="form-group d-flex align-items-center gap-2 my-4">
+                <label class=" w-100">Asignar Coordenadas Despues</label>
+                <input [(ngModel)]="zonaAsignateLater" type="checkbox">
+            </div>
+            <div class="form-group">
+                <label>MapBox JSON (Coordenadas)</label>
+                <input type="text" class="custom-input {{ zonaAsignateLater() ? 'input-disabled' : '' }}"
+                    [disabled]="zonaAsignateLater()" [(ngModel)]="nuevaRuta().mapboxJSON"
+                    placeholder='[["88.123", "-20.123"],["32.23","-10.223"],...]'>
+            </div>
+            <div class="form-group">
+                <label>Zona</label>
+                <select [(ngModel)]="nuevaRuta().zona">
+                    <option [ngValue]="undefined" disabled selected>Selecciona una zona de las disponibles</option>
+                    @for (zona of zonas(); track zona.id) {
+                    <option [ngValue]="zona">{{ zona.nombre_zona}}</option>
+                    }
+                </select>
+            </div>
+            <p class="error-message m-1 {{ errorMessage()?'show':'hidden' }}" [class.show]="errorMessage()">{{
+                errorMessage() }}</p>
+            <p class="success-message m-1 {{ successMessage()?'show':'hidden' }}" [class.show]="successMessage()">{{
+                successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalCreation()">Cancelar</button>
+            <button class="btn-save" (click)="crearRuta()">
+                <span class="material-symbols-outlined">save</span> Guardar Ruta
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+<!-- Modal de Edición-->
+@if (isModalEditOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Editar Ruta</h2>
+            <button class="btn-close" (click)="closeModalEdit()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre de la Ruta</label>
+                <input type="text" [(ngModel)]="rutaSeleccionada().nombreRuta" placeholder="Ej: Sendero del Castillo">
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea [(ngModel)]="rutaSeleccionada().descripcion"
+                    placeholder="Breve descripción de la trayectoria..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>MapBox JSON (Coordenadas)</label>
+                <input type="text" [(ngModel)]="rutaSeleccionada().mapboxJSON" placeholder='{"type": "Feature", ...}'>
+            </div>
+            <div class="form-group">
+                <label>Zona</label>
+                <select [(ngModel)]="rutaSeleccionada().zona!.id">
+                    @for (zona of zonas(); track zona.id) {
+                    <option [value]="zona.id">{{ zona.nombre_zona }}</option>
+                    }
+                </select>
+            </div>
+            <p class="error-message m-1 {{ errorMessage()?'show':'hidden' }}" [class.show]="errorMessage()">{{
+                errorMessage() }}</p>
+            <p class="success-message m-1 {{ successMessage()?'show':'hidden' }}" [class.show]="successMessage()">{{
+                successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalEdit()">Cancelar</button>
+            <button class="btn-save" (click)="editarRuta()">
+                <span class="material-symbols-outlined">save</span> Guardar Cambios
+            </button>
+        </div>
+    </div>
+</div> }
+
+@if (isModalDeleteOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Confirmar Eliminación</h2>
+            <button class="btn-close" (click)="closeModalDelete()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Estás seguro de que deseas eliminar la ruta <b>{{ rutaSeleccionada()?.nombreRuta }}</b>? Esta acción no
+                se puede deshacer.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalDelete()">Cancelar</button>
+            <button class="btn-delete" (click)="borrarRuta()">
+                <span class="material-symbols-outlined">delete</span> Eliminar Ruta
+            </button>
+        </div>
+    </div>
+</div>
+}

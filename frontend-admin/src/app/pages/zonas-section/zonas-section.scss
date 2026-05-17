@@ -1,20 +1,326 @@
 @use '../../../variables' as global;
+
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    p {
+        color: global.$color-texto-dim;
+    }
+}
+
+.user-pill {
+    background: global.$color-card;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* Acciones */
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-create {
+    background: global.$color-create;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-bar {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: global.$color-texto;
+    outline: none;
+}
+
+/* Tabla */
+.card-table {
+    background: global.$color-card;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: rgba(0, 0, 0, 0.2);
+    text-align: left;
+    padding: 15px;
+    color: global.$color-texto-dim;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Datos de ejemplo */
+.id-cell {
+    color: global.$color-focus;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.desc-cell {
+    color: global.$color-texto-dim;
+    font-size: 0.9rem;
+    max-width: 250px;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}
+
+.author {
+    color: global.$color-texto-dim;
+}
+
+/* Botones de acción corregidos */
+.actions-cell {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: global.$color-texto;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: rgba(255, 165, 2, 0.15);
+    color: global.$color-edit;
+}
+
+.btn-edit:hover {
+    background: global.$color-edit;
+    color: black;
+}
+
+.btn-delete {
+    background: rgba(255, 71, 87, 0.15);
+    color: global.$color-danger;
+}
+
+.btn-delete:hover {
+    background: global.$color-danger;
+    color: global.$color-texto;
+}
+
+// Modal
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background: global.$color-card; // Usando tus variables de styles.css
+    width: 500px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    padding: 25px;
+
+    .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
-        p {
-            color: global.$color-texto-dim;
+        h2 {
+            color: global.$color-accent;
+            margin: 0;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: global.$color-texto;
+            cursor: pointer;
         }
     }
 
-    .user-pill {
-        background: global.$color-card;
-        padding: 8px 15px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    .form-group {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: global.$color-texto-dim;
+            font-size: 0.9rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(5, 5, 5, 0.185);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+
+            &:focus {
+                border-color: global.$color-accent;
+            }
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background-color: #02020236;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            /* Tu fondo oscuro del panel */
+            color: global.$color-texto;
+
+            option {
+                background-color: #1a1a2e;
+                /* Fondo de la lista desplegable */
+                color: global.$color-texto;
+                padding: 10px;
+                /* Nota: Algunos navegadores ignorarán el padding */
+
+                &:disabled {
+                    color: #555555;
+                    /* Color para el "Selecciona una zona..." */
+                }
+            }
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        .custom-input { 
+            &.input-disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                background-color: rgba(0, 0, 0, 0.4);
+                border-color: rgba(255, 255, 255, 0.05);
+
+                &:focus {
+                    border-color: rgba(255, 255, 255, 0.05) !important; 
+                }
+            }
+        }
+
     }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+
+        .btn-cancel {
+            background: transparent;
+            border: none;
+            color: global.$color-texto;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: global.$color-create;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+}
+
+.error-message {
+    color: #ff4a4a;
+    white-space: pre-line; 
+    line-height: 1.4; 
+    /* Tu color de error */
+
+    &.show {
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+        /* Desaparece del flujo de la página */
+    }
+}
+.success-message {
+    color: #4caf50;
+    white-space: pre-line;
+    line-height: 1.4;
+    /* Tu color de éxito */
+
+    &.show {
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+        /* Desaparece del flujo de la página */
+    }
+}

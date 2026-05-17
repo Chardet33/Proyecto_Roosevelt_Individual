@@ -203,8 +203,9 @@ public class ZonaController {
         @ApiResponse(responseCode = "404", description = "Zona no encontrada", content = @Content())
     })
     // ***************************************************************************    
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateZona(
+            @PathVariable int id,
             @Valid @RequestBody Zona zonaUpdate) {
 
         ResponseEntity<Map<String, Object>> response;
@@ -215,7 +216,6 @@ public class ZonaController {
 
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
         } else {
-            int id = zonaUpdate.getId();
             Zona existingZona = zonaService.findById(id);
 
             if (existingZona == null) {

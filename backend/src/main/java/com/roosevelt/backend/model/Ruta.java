@@ -43,7 +43,7 @@ public class Ruta implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true) 
-    private int id;
+    private Integer id;
 
     @Schema(description = "El nombre de la Ruta", example = "Cookies")
     @NotBlank(message = "El nombre de la Ruta es obligatorio")
@@ -70,16 +70,16 @@ public class Ruta implements Serializable{
 
     @Schema(description = "La cantidad de likes", example = "0")
     @NotNull(message = "La cantidad de likes es obligatoria")
-    @Column(name = "likes_count", nullable = false, unique = true) 
-    private int likesCount;
+    @Column(name = "likes_count", nullable = false, unique = false) 
+    private Integer likesCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_zona", referencedColumnName = "id")
-    @JsonIgnoreProperties("rutas")  
+   @JsonIgnoreProperties({"rutas", "nombre_zona", "mapbox_json", "peligrosidad"})
     private Zona zona;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_autor", referencedColumnName = "id")
-    @JsonIgnoreProperties("rutas")  
+    @JsonIgnoreProperties({"misRutas", "username", "email", "password", "email_sec", "administrador"})
     private Usuario usuario_autor;
 }

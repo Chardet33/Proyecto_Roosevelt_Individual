@@ -208,7 +208,7 @@ public class RutaController {
                     || ruta.getDescripcion() == null || ruta.getDescripcion().trim().isEmpty()
                     || ruta.getMapboxJSON() == null || ruta.getMapboxJSON().trim().isEmpty()
                     || ruta.getFecha_pub() == null
-                    || ruta.getLikesCount() <= 0
+                    || ruta.getLikesCount() < 0 
                     || ruta.getZona() == null
                     || ruta.getUsuario_autor() == null
                     ) {
@@ -248,65 +248,33 @@ public class RutaController {
         @ApiResponse(responseCode = "404", description = "Ruta no encontrada", content = @Content())
     })
     // ***************************************************************************    
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateRuta(
-            @Valid @RequestBody Ruta rutaUpdate) {
+            @PathVariable int id,
+            @Valid @RequestBody Ruta rutaDetails) {
 
         ResponseEntity<Map<String, Object>> response;
 
-        if (rutaUpdate == null) {
+        // Buscamos si la ruta existe usando la ID que viene de la URL
+        Ruta existingRuta = rutaService.findByIdRuta(id);
+
+        if (existingRuta == null) {
             Map<String, Object> map = new HashMap<>();
-            map.put("error", "El cuerpo de la solicitud no puede estar vacío");
-
-            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+            map.put("error", "Ruta no encontrada");
+            map.put("id", id);
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
         } else {
-            int id = rutaUpdate.getId();
-            Ruta existingRuta = rutaService.findByIdRuta(id);
+            // Pasamos los datos del JSON a la ruta existente usando tu servicio
+            Ruta updatedRuta = rutaService.update(id, rutaDetails);
 
-            if (existingRuta == null) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("error", "Ruta no encontrada");
-                map.put("id", id);
+            Map<String, Object> map = new HashMap<>();
+            map.put("mensaje", "Ruta actualizada con éxito");
+            map.put("updatedRuta", updatedRuta);
 
-                response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
-            } else {
-
-                // Actualizar campos si están presentes
-                if (rutaUpdate.getNombreRuta() != null) {
-                    existingRuta.setNombreRuta(rutaUpdate.getNombreRuta());
-                }
-                if (rutaUpdate.getDescripcion() != null) {
-                    existingRuta.setDescripcion(rutaUpdate.getDescripcion());
-                }
-                if (rutaUpdate.getMapboxJSON() != null) {
-                    existingRuta.setMapboxJSON(rutaUpdate.getMapboxJSON());
-                }
-                if (rutaUpdate.getFecha_pub() != null) {
-                    existingRuta.setFecha_pub(rutaUpdate.getFecha_pub());
-                }
-                if (rutaUpdate.getLikesCount() > 0) {
-                    existingRuta.setLikesCount(rutaUpdate.getLikesCount());
-                }
-                if (rutaUpdate.getZona() != null) {
-                    existingRuta.setZona(rutaUpdate.getZona());
-                }
-                if (rutaUpdate.getUsuario_autor() != null) {
-                    existingRuta.setUsuario_autor(rutaUpdate.getUsuario_autor());
-                }              
-
-                Ruta rutaPut = rutaService.save(existingRuta);
-
-                Map<String, Object> map = new HashMap<>();
-                map.put("mensaje", "Ruta actualizado con éxito");
-                map.put("updatedRuta", rutaPut);
-
-                response = ResponseEntity.status(HttpStatus.OK).body(map);
-            }
+            response = ResponseEntity.status(HttpStatus.OK).body(map);
         }
-
         return response;
     }
-
 
     // ****************************************************************************
     // DELETE

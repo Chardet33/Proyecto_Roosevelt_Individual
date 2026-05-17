@@ -1,4 +1,5 @@
 import { Usuario } from "./usuario.model";
+import { Zona } from "./zona.model";
 
 export interface Ruta {
   id: number;
@@ -7,6 +8,6 @@ export interface Ruta {
   descripcion: string;
   fecha_pub: string;    
   likesCount: number;
-  zona?: any;           
+  zona: Zona;           
   usuario_autor: Usuario; 
 }

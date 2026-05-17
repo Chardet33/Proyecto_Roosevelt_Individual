@@ -54,7 +54,7 @@ header {
 .search-bar input {
     background: transparent;
     border: none;
-    color: white;
+    color: global.$color-texto;
     outline: none;
 }
 
@@ -128,7 +128,7 @@ td {
     cursor: pointer;
     display: flex;
     align-items: center;
-    color: white;
+    color: global.$color-texto;
     transition: 0.2s;
 }
 
@@ -149,5 +149,178 @@ td {
 
 .btn-delete:hover {
     background: global.$color-danger;
-    color: white;
+    color: global.$color-texto;
+}
+
+// Modal
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background: global.$color-card; // Usando tus variables de styles.css
+    width: 500px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    padding: 25px;
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h2 {
+            color: global.$color-accent;
+            margin: 0;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: global.$color-texto;
+            cursor: pointer;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: global.$color-texto-dim;
+            font-size: 0.9rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(5, 5, 5, 0.185);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+
+            &:focus {
+                border-color: global.$color-accent;
+            }
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background-color: #02020236;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            /* Tu fondo oscuro del panel */
+            color: global.$color-texto;
+
+            option {
+                background-color: #1a1a2e;
+                /* Fondo de la lista desplegable */
+                color: global.$color-texto;
+                padding: 10px;
+                /* Nota: Algunos navegadores ignorarán el padding */
+
+                &:disabled {
+                    color: #555555;
+                    /* Color para el "Selecciona una zona..." */
+                }
+            }
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        .custom-input { 
+            &.input-disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                background-color: rgba(0, 0, 0, 0.4);
+                border-color: rgba(255, 255, 255, 0.05);
+
+                &:focus {
+                    border-color: rgba(255, 255, 255, 0.05) !important; 
+                }
+            }
+        }
+
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+
+        .btn-cancel {
+            background: transparent;
+            border: none;
+            color: global.$color-texto;
+            cursor: pointer;
+        }
+
+        .btn-save {
+            background: global.$color-create;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+}
+
+.error-message {
+    color: #ff4a4a;
+    white-space: pre-line; 
+    line-height: 1.4; 
+    /* Tu color de error */
+
+    &.show {
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+        /* Desaparece del flujo de la página */
+    }
+}
+.success-message {
+    color: #4caf50;
+    white-space: pre-line;
+    line-height: 1.4;
+    /* Tu color de éxito */
+
+    &.show {
+        display: block;
+    }
+
+    &.hidden {
+        display: none;
+        /* Desaparece del flujo de la página */
+    }
 }

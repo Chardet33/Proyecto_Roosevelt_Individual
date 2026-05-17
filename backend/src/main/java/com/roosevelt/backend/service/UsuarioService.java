@@ -58,8 +58,9 @@ public class UsuarioService {
         if (userUpdate.getPassword() != null) {
             usuario.setPassword(userUpdate.getPassword());
         }
-        usuario.setAdministrador(userUpdate.isAdministrador());
-        
+        if (userUpdate.getAdministrador() != null) {
+            usuario.setAdministrador(userUpdate.getAdministrador());
+        }
         return userRepository.save(usuario);
     }
     

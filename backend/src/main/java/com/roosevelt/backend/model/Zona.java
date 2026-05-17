@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,7 +49,7 @@ public class Zona implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true) 
-    private int id;
+    private Integer id;
 
     @Schema(description = "El nombre de la Zona", example = "Castillo")
     @NotBlank(message = "El nombre de la Zona es obligatorio")
@@ -61,8 +63,10 @@ public class Zona implements Serializable{
     @Column(name = "mapbox_json", nullable = false, unique = false) 
     private String mapbox_json;
 
+    
     @Schema(description = "La peligrosidad de la Zona", example = "Verde")
     @NotBlank(message = "La peligrosidad nombre de la Zona es obligatorio")
+    @Enumerated(EnumType.STRING)
     @Size(min=1, max=20, message = "La peligrosidad de la Zona no puede tener más de 20 caracteres")
     @Column(name = "peligrosidad", nullable = false, unique = false) 
     private PeligrosidadEnum peligrosidad;

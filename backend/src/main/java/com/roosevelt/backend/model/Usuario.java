@@ -60,15 +60,13 @@ public class Usuario implements Serializable {
     @NotBlank(message = "El password es obligatorio")
     @Column(name = "password", nullable = false, unique = false) 
     private String password;
-
-
-    @NotBlank(message = "El email es obligatorio")
-    @Size(min=1, max=100, message = "El email no puede tener más de 100 caracteres")
-    @Column(name = "email_sec", nullable = false, unique = true) 
+    
+    @Size(max=100, message = "El email no puede tener más de 100 caracteres")
+    @Column(name = "email_sec", nullable = true, unique = false) 
     private String email_sec;
    
     @Column(name = "administrador", nullable = false, unique = false) 
-    private boolean administrador;
+    private Boolean administrador;
     @Size(max = 15)
     @Column(length = 15)
     private String tel;
@@ -83,4 +81,9 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario_autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("usuario_autor")  
     private Set<Ruta> misRutas = new HashSet<>();
+
+
+    public Boolean isAdministrador() {
+        return this.administrador;
+    }
 }

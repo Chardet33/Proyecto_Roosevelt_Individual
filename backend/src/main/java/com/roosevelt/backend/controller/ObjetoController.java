@@ -229,8 +229,9 @@ public class ObjetoController {
         @ApiResponse(responseCode = "404", description = "Objeto no encontrado", content = @Content())
     })
     // ***************************************************************************    
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateObjeto(
+            @PathVariable Integer id,
             @Valid @RequestBody Objeto objetoUpdate) {
 
         ResponseEntity<Map<String, Object>> response;
@@ -241,7 +242,7 @@ public class ObjetoController {
 
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
         } else {
-            int id = objetoUpdate.getId();
+                      
             Objeto existingObjeto = objetoService.findById(id);
 
             if (existingObjeto == null) {

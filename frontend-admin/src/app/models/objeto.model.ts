@@ -1,10 +1,7 @@
 import { Zona } from "./zona.model";
+import { TipoObjeto } from "./tipoobjeto.model";
 
-export interface TipoObjeto {
-  id: number;
-  nombre_tipo: string;
-  icono: string;
-}
+
 
 export interface Objeto {
   id: number;

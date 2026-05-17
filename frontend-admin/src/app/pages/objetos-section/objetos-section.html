@@ -1,13 +1,230 @@
 <div class="objetos-section">
     <header>
-                <div class="header-content">
-                    <h1>Gestión de Objetos</h1>
-                    <p>Panel administrativo para el control de objetos</p>
-                </div>
-                <div class="user-pill">
-                    <span class="material-symbols-outlined">account_circle</span>
-                    <b>Admin</b>
-                </div>
+        <div class="header-content">
+            <h1>Gestión de Objetos</h1>
+            <p>Panel administrativo para el control de recursos, contenedores e infraestructura del mapa</p>
+        </div>
     </header>
+
+    <section class="content-area">
+        <div class="header">
+            <div class="table-actions">
+                <button class="btn-create" (click)="openModalCreation()">
+                    <span class="material-symbols-outlined">add</span> Nuevo Objeto
+                </button>
+                <div class="search-bar">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Buscar objeto por nombre...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre Objeto</th>
+                        <th>Tipo</th>
+                        <th>Zona Asignada</th>
+                        <th>Peligrosidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (obj of objetos(); track obj.id) {
+                    <tr>
+                        <td class="id-cell"><b>#OBJ-{{ obj.id }}</b></td>
+                        <td>
+                            <img [src]="obj.imagen || 'assets/default-object.png'" alt="Objeto"
+                                style="width: 35px; height: 35px; border-radius: 4px; object-fit: cover;">
+                        </td>
+                        <td>{{ obj.nombre_objeto }}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 8px;">                                
+                                <span>{{ obj.tipoObjeto?.nombre_tipo || 'Sin tipo' }}</span>
+                            </div>
+                        </td>
+                        <td>{{ obj.zona?.nombre_zona || 'No asignada' }}</td>
+                        <td>
+                            <span class="badge">
+                                {{ obj.peligrosidad }}
+                            </span>
+                        </td>
+                        <td class="actions-cell">
+                            <button class="btn-edit" (click)="openModalEdit(obj)">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-delete" (click)="openModalDelete(obj.id)">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: #6c757d;">No se encontraron
+                            objetos registrados en el sistema.</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
-<p>objetos-section works!</p>
+
+@if (isModalCreationOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Registrar Nuevo Objeto</h2>
+            <button class="btn-close" (click)="closeModalCreation()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre del Objeto</label>
+                <input type="text" [(ngModel)]="nuevoObjeto().nombre_objeto" placeholder="Ej: Contenedor Médico S1">
+            </div>
+            <div class="form-group">
+                <label>Descripción / Detalles</label>
+                <input type="text" [(ngModel)]="nuevoObjeto().descripcion"
+                    placeholder="Detalles de lo que contiene o su estado...">
+            </div>
+            <div class="form-group">
+                <label>URL de la Imagen</label>
+                <input type="text" [(ngModel)]="nuevoObjeto().imagen" placeholder="https://ejemplo.com/imagen.png">
+            </div>
+            <div class="form-group">
+                <label>Nivel de Peligrosidad</label>
+                <input type="text" [(ngModel)]="nuevoObjeto().peligrosidad" placeholder="Ej: Baja, Media, Alta">
+            </div>
+            <div class="form-group">
+                <label>Ubicación Mapbox (JSON)</label>
+                <textarea [(ngModel)]="nuevoObjeto().mapBoxJSON"
+                    placeholder='Ej: {"type": "Point", "coordinates": [0.0, 0.0]}'></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Asignar Tipo de Objeto</label>
+                <select [(ngModel)]="tipoObjetoSeleccionadoId">
+                    <option value="">-- Selecciona un tipo --</option>
+                    @for (tipo of tiposObjeto(); track tipo.id) {
+                    <option [value]="tipo.id">{{ tipo.nombre_tipo }}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Asignar Zona Geográfica</label>
+                <select [(ngModel)]="zonaSeleccionadaId">
+                    <option value="">-- Selecciona una zona --</option>
+                    @for (z of zonas(); track z.id) {
+                    <option [value]="z.id">{{ z.nombre_zona }}</option>
+                    }
+                </select>
+            </div>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalCreation()">Cancelar</button>
+            <button class="btn-save" (click)="crearObjeto()">
+                <span class="material-symbols-outlined">save</span> Guardar Objeto
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalEditOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Editar Objeto #{{ objetoSeleccionado().id }}</h2>
+            <button class="btn-close" (click)="closeModalEdit()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre del Objeto</label>
+                <input type="text" [(ngModel)]="objetoSeleccionado().nombre_objeto">
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" [(ngModel)]="objetoSeleccionado().descripcion">
+            </div>
+            <div class="form-group">
+                <label>URL de la Imagen</label>
+                <input type="text" [(ngModel)]="objetoSeleccionado().imagen">
+            </div>
+            <div class="form-group">
+                <label>Nivel de Peligrosidad</label>
+                <input type="text" [(ngModel)]="objetoSeleccionado().peligrosidad">
+            </div>
+            <div class="form-group">
+                <label>Ubicación Mapbox (JSON)</label>
+                <textarea [(ngModel)]="objetoSeleccionado().mapBoxJSON"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Asignar Tipo de Objeto</label>
+                <select [(ngModel)]="tipoObjetoSeleccionadoId">
+                    <option value="">-- Selecciona un tipo --</option>
+                    @for (tipo of tiposObjeto(); track tipo.id) {
+                    <option [value]="tipo.id">{{ tipo.nombre_tipo }}</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Cambiar Zona Geográfica</label>
+                <select [(ngModel)]="zonaSeleccionadaId">
+                    <option value="">-- Selecciona una zona --</option>
+                    @for (z of zonas(); track z.id) {
+                    <option [value]="z.id">{{ z.nombre_zona }}</option>
+                    }
+                </select>
+            </div>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalEdit()">Cancelar</button>
+            <button class="btn-save" (click)="editarObjeto()">
+                <span class="material-symbols-outlined">save</span> Guardar Cambios
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalDeleteOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Confirmar Eliminación</h2>
+            <button class="btn-close" (click)="closeModalDelete()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Estás seguro de que deseas eliminar permanentemente el objeto <b>{{ objetoSeleccionado().nombre_objeto
+                    }}</b>?</p>
+            <p style="color: #6c757d; font-size: 0.85em; margin-top: 8px;">Esta operación eliminará el registro de la
+                base de datos de manera inmediata.</p>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalDelete()">Cancelar</button>
+            <button class="btn-delete" (click)="borrarObjeto()">
+                <span class="material-symbols-outlined">delete</span> Eliminar Objeto
+            </button>
+        </div>
+    </div>
+</div>
+}

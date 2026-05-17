@@ -134,10 +134,8 @@ public class UsuarioController {
             if (usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()
                     || usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()
                     || usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()
-                    || usuario.getEmail_sec() == null || usuario.getEmail_sec().trim().isEmpty()
                     || usuario.getTel() == null || usuario.getTel().trim().isEmpty()
                     || usuario.getFechaNac() == null
-                    || usuario.getFoto() == null || usuario.getFoto().trim().isEmpty()
                     ) {
 
                 Map<String, Object> map = new HashMap<>();
@@ -176,8 +174,9 @@ public class UsuarioController {
     })
     // ***************************************************************************    
    
-    @PutMapping("")
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateusuario(
+            @PathVariable Integer id,
             @Valid
             @RequestBody 
         Usuario usuarioUpdate) {
@@ -189,8 +188,7 @@ public class UsuarioController {
             map.put("error", "El cuerpo de la solicitud no puede estar vacío");
 
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
-        } else {
-            Integer id = usuarioUpdate.getId();
+        } else {            
             Usuario existingusuario = usuarioService.findById(id);
 
             if (existingusuario == null) {

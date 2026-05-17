@@ -20,8 +20,7 @@ export class LoginComponent {
     if(!this.username || !this.password) {
       this.errorMessage.set('Por favor, ingresa tu nombre de usuario y contraseña.');
       return;
-    }
-    
+    }   
 
 
     this.authService.login(this.username, this.password).subscribe({      

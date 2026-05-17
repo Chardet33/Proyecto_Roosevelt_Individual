@@ -1,13 +1,195 @@
-<div class="usuarios-section">
-    <header>
-                <div class="header-content">
-                    <h1>Gestión de Usuarios</h1>
-                    <p>Panel administrativo para el control de usuarios</p>
-                </div>
-                <div class="user-pill">
-                    <span class="material-symbols-outlined">account_circle</span>
-                    <b>Admin</b>
-                </div>
+<div class="usuarios-section"> <header>
+        <div class="header-content">
+            <h1>Gestión de Usuarios</h1>
+            <p>Panel administrativo para el control de cuentas y credenciales</p>
+        </div>
     </header>
+
+    <section class="content-area">
+        <div class="header">
+            <div class="table-actions">
+                <button class="btn-create" (click)="openModalCreation()">
+                    <span class="material-symbols-outlined">add</span> Nuevo Usuario
+                </button>
+                <div class="search-bar">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Buscar usuario por username...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Foto</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (user of usuarios(); track user.id) {
+                    <tr>
+                        <td class="id-cell"><b>#US-{{ user.id }}</b></td>
+                        <td>
+                            <img [src]="user.foto || 'assets/default-avatar.png'" alt="Avatar" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">
+                        </td>
+                        <td>{{ user.username }}</td>
+                        <td class="desc-cell">{{ user.email }}</td>
+                        <td class="desc-cell">{{ user.tel || 'No asignado' }}</td>
+                        <td>
+                            <span style="padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em;"
+                                  [style.background-color]="user.administrador ? '#e8f5e9' : '#f5f5f5'"
+                                  [style.color]="user.administrador ? '#2e7d32' : '#616161'">
+                                {{ user.administrador ? 'Administrador' : 'Usuario' }}
+                            </span>
+                        </td>
+                        <td class="actions-cell">
+                            <button class="btn-edit" (click)="openModalEdit(user)">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-delete" (click)="openModalDelete(user.id)">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: #6c757d;">No se encontraron usuarios registrados en el sistema.</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
-<p>usuarios-section works!</p>
+
+@if (isModalCreationOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Registrar Nuevo Usuario</h2>
+            <button class="btn-close" (click)="closeModalCreation()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre de Usuario (Username)</label>
+                <input type="text" [(ngModel)]="nuevoUsuario().username" placeholder="Ej: lucas_dev">
+            </div>
+            <div class="form-group">
+                <label>Email Principal</label>
+                <input type="email" [(ngModel)]="nuevoUsuario().email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" [(ngModel)]="nuevoUsuario().password" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>Email Secundario</label>
+                <input type="email" [(ngModel)]="nuevoUsuario().email_sec" placeholder="correo_secundario@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" [(ngModel)]="nuevoUsuario().tel" placeholder="Ej: 600000000">
+            </div>
+            <div class="form-group">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" [(ngModel)]="nuevoUsuario().fechaNac">
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px; padding-top: 5px;">
+                <input type="checkbox" id="adminCheckNew" [(ngModel)]="nuevoUsuario().administrador" style="width: auto; margin: 0;">
+                <label for="adminCheckNew" style="margin: 0; cursor: pointer;">Otorgar permisos de Administrador</label>
+            </div>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalCreation()">Cancelar</button>
+            <button class="btn-save" (click)="crearUsuario()">
+                <span class="material-symbols-outlined">save</span> Guardar Usuario
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalEditOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Editar Usuario #{{ usuarioSeleccionado().id }}</h2>
+            <button class="btn-close" (click)="closeModalEdit()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre de Usuario</label>
+                <input type="text" [(ngModel)]="usuarioSeleccionado().username">
+            </div>
+            <div class="form-group">
+                <label>Email Principal</label>
+                <input type="email" [(ngModel)]="usuarioSeleccionado().email">
+            </div>
+            <div class="form-group">
+                <label>Email Secundario</label>
+                <input type="email" [(ngModel)]="usuarioSeleccionado().email_sec">
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text" [(ngModel)]="usuarioSeleccionado().tel">
+            </div>
+            <div class="form-group">
+                <label>URL de Foto de Perfil</label>
+                <input type="text" [(ngModel)]="usuarioSeleccionado().foto">
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px; padding-top: 5px;">
+                <input type="checkbox" id="adminCheckEdit" [(ngModel)]="usuarioSeleccionado().administrador" style="width: auto; margin: 0;">
+                <label for="adminCheckEdit" style="margin: 0; cursor: pointer;">Permisos de Administrador</label>
+            </div>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalEdit()">Cancelar</button>
+            <button class="btn-save" (click)="editarUsuario()">
+                <span class="material-symbols-outlined">save</span> Guardar Cambios
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalDeleteOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Confirmar Eliminación</h2>
+            <button class="btn-close" (click)="closeModalDelete()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Estás seguro de que deseas eliminar permanentemente al usuario <b>{{ usuarioSeleccionado().username }}</b>?</p>
+            <p style="color: #6c757d; font-size: 0.85em; margin-top: 8px;">Aviso: Si este usuario creó registros antiguos en <code>data.sql</code>, la base de datos impedirá la acción por clave foránea.</p>
+            
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalDelete()">Cancelar</button>
+            <button class="btn-delete" (click)="borrarUsuario()">
+                <span class="material-symbols-outlined">delete</span> Eliminar Cuenta
+            </button>
+        </div>
+    </div>
+</div>
+}

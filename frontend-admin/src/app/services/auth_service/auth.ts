@@ -12,7 +12,7 @@ export class AuthService {
     private apiUrl = 'http://localhost:8080/roosevelt/api/auth/login';
 
     login(username: string, password: string): Observable<any> {
-        return this.http.post(this.apiUrl, { username, password });
+        return this.http.post(this.apiUrl, { username, password }, { withCredentials: true });
     }
     
     // Signal para reactivity

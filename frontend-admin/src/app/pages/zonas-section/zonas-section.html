@@ -1,13 +1,181 @@
 <div class="zonas-section">
     <header>
-                <div class="header-content">
-                    <h1>Gestión de Zonas</h1>
-                    <p>Panel administrativo para el control de zonas</p>
-                </div>
-                <div class="user-pill">
-                    <span class="material-symbols-outlined">account_circle</span>
-                    <b>Admin</b>
-                </div>
+        <div class="header-content">
+            <h1>Gestión de Zonas</h1>
+            <p>Panel administrativo para delimitar áreas geográficas y niveles de riesgo</p>
+        </div>
     </header>
+
+    <section class="content-area">
+        <div class="header">
+            <div class="table-actions">
+                <button class="btn-create" (click)="openModalCreation()">
+                    <span class="material-symbols-outlined">add</span> Nueva Zona
+                </button>
+                <div class="search-bar">
+                    <span class="material-symbols-outlined">search</span>
+                    <input type="text" placeholder="Buscar zona por nombre...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Zona</th>
+                        <th>Peligrosidad</th>
+                        <th>Mapbox Geometría (JSON)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (zona of zonas(); track zona.id) {
+                    <tr>
+                        <td class="id-cell"><b>#ZN-{{ zona.id }}</b></td>
+                        <td>{{ zona.nombre_zona }}</td>
+                        <td>
+                            <span
+                                style="padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; background-color: #f1f3f5; color: #495057;">
+                                {{ zona.peligrosidad }}
+                            </span>
+                        </td>
+                        <td
+                            style="font-family: monospace; font-size: 0.9em; color: #6c757d; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ zona.mapbox_json }}
+                        </td>
+                        <td class="actions-cell">
+                            <button class="btn-edit" (click)="openModalEdit(zona)">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-delete" (click)="openModalDelete(zona.id)">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: #6c757d;">No hay zonas
+                            geográficas configuradas en el sistema.</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
 </div>
-<p>zonas-section works!</p>
+
+@if (isModalCreationOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Crear Nueva Zona</h2>
+            <button class="btn-close" (click)="closeModalCreation()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group" [style.opacity]="mapboxAsignateLater() ? '0.5' : '1'">
+                <label>Nombre de la Zona</label>
+                <input type="text" [(ngModel)]="nuevaZona().nombre_zona" placeholder="Ej: Sector Norte - Montaña"
+                    [disabled]="mapboxAsignateLater()">
+            </div>
+            <div class="form-group">
+                <label>Nivel de Peligrosidad *</label>
+                <select [(ngModel)]="nuevaZona().peligrosidad">
+                    <option value="" disabled selected>Selecciona un nivel</option>
+                    <option value="VERDE">Bajo (Verde)</option>
+                    <option value="AMARILLO">Medio (Amarillo)</option>
+                    <option value="ROJO">Alto (Rojo)</option>
+                </select>
+            </div>
+            <div class="form-group-checkbox">
+                <input type="checkbox" id="mapboxLater" [checked]="mapboxAsignateLater()"
+                    (change)="mapboxAsignateLater.set(!mapboxAsignateLater())">
+                <label for="mapboxLater">Asignar geometría de MapBox más tarde</label>
+            </div>
+            <div class="form-group">
+                <label>Coordenadas Mapbox (JSON)</label>
+                <textarea [(ngModel)]="nuevaZona().mapbox_json" placeholder='Ej: [[0.0, 0.0], [1.1, 1.1]]'></textarea>
+            </div>
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalCreation()">Cancelar</button>
+            <button class="btn-save" (click)="crearZona()">
+                <span class="material-symbols-outlined">save</span> Registrar Zona
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalEditOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Editar Zona #{{ zonaSeleccionada().id }}</h2>
+            <button class="btn-close" (click)="closeModalEdit()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Nombre de la Zona</label>
+                <input type="text" [(ngModel)]="zonaSeleccionada().nombre_zona">
+            </div>
+            <div class="form-group">
+                <label>Nivel de Peligrosidad *</label>
+                <select [(ngModel)]="zonaSeleccionada().peligrosidad">
+                    <option value="VERDE">Bajo (Verde)</option>
+                    <option value="AMARILLO">Medio (Amarillo)</option>
+                    <option value="ROJO">Alto (Rojo)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Coordenadas Mapbox (JSON)</label>
+                <textarea [(ngModel)]="zonaSeleccionada().mapbox_json"></textarea>
+            </div>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalEdit()">Cancelar</button>
+            <button class="btn-save" (click)="editarZona()">
+                <span class="material-symbols-outlined">save</span> Guardar Cambios
+            </button>
+        </div>
+    </div>
+</div>
+}
+
+@if (isModalDeleteOpen()) {
+<div class="modal-backdrop">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Confirmar Eliminación</h2>
+            <button class="btn-close" (click)="closeModalDelete()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>¿Estás totalmente seguro de borrar la zona <b>{{ zonaSeleccionada().nombre_zona }}</b>?</p>
+            <p style="color: #6c757d; font-size: 0.85em; margin-top: 8px;">Nota: Si existen rutas asignadas a esta
+                zona
+                en la base de datos, el sistema lanzará un fallo de integridad para proteger los datos.</p>
+
+            <p class="error-message m-1" [class.show]="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-message m-1" [class.show]="successMessage()">{{ successMessage() }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="closeModalDelete()">Cancelar</button>
+            <button class="btn-delete" (click)="borrarZona()">
+                <span class="material-symbols-outlined">delete</span> Eliminar Zona
+            </button>
+        </div>
+    </div>
+</div>
+}
