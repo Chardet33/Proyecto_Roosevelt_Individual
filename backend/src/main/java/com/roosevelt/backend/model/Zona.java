@@ -66,7 +66,6 @@ public class Zona implements Serializable{
     
     @Schema(description = "La peligrosidad de la Zona", example = "Verde")
     @NotBlank(message = "La peligrosidad nombre de la Zona es obligatorio")
-    @Enumerated(EnumType.STRING)
     @Size(min=1, max=20, message = "La peligrosidad de la Zona no puede tener más de 20 caracteres")
     @Column(name = "peligrosidad", nullable = false, unique = false) 
     private PeligrosidadEnum peligrosidad;
